@@ -15,7 +15,7 @@ function App() {
         <Suspense fallback={null}>
           <mesh>
             <Body />
-            <mesh position={[0, 20, 0]} rotation={[Math.PI * 90, Math.PI * 90, 0]}>
+            <mesh position={[0, 20, 30]} rotation={[0, Math.PI, 0]}>
               <Key text="TEST" />
             </mesh>
           </mesh>

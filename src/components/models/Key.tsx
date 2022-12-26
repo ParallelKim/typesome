@@ -10,8 +10,10 @@ export default function Key({ text }: { text?: string }) {
     loader.setMaterials(materials);
   });
   return (
-    <primitive object={obj} scale={2.5}>
-      <Text>{text ?? ""}</Text>
+    <primitive object={obj} scale={2.5} roatation={[0, 0, 0]}>
+      <Text position={[0, 0.25, 0.4]} scale={[10, 10, 10]} rotation={[Math.PI * 0.5, Math.PI, 0]} color={"black"} anchorX="center" anchorY="top">
+        {text ?? ""}
+      </Text>
     </primitive>
   );
 }

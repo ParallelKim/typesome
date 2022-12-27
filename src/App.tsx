@@ -3,10 +3,12 @@ import { Canvas } from "@react-three/fiber";
 import { Body, Key } from "./components/models";
 import { Suspense, useState } from "react";
 import { Environment, OrbitControls } from "@react-three/drei";
+import { KEYS } from "./constants";
 
 function App() {
   const [lang, setLang] = useState("en");
   const [viewControll, setViewControll] = useState(true);
+  const [current, setCurrent] = useState();
 
   return (
     <div id="canvas">
@@ -16,6 +18,7 @@ function App() {
           <mesh>
             <Body />
             <mesh position={[0, 20, 30]} rotation={[0, Math.PI, 0]}>
+              <Key text="TEST" />
               <Key text="TEST" />
             </mesh>
           </mesh>

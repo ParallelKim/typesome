@@ -4,26 +4,27 @@ import { Body, Key } from "./components/models";
 import { Suspense, useState } from "react";
 import { Environment, OrbitControls } from "@react-three/drei";
 import { KEYS, SIZE } from "./constants";
+import { Keyboard } from "./components/groups/Keyboard";
 
 function App() {
-  const KEYSPACE = SIZE.KEY.SMALL + SIZE.SPACE;
-
-  const [lang, setLang] = useState("en");
   const [viewControll, setViewControll] = useState(true);
   const [current, setCurrent] = useState();
 
   return (
     <div id="canvas">
-      <Canvas>
+      <Canvas
+        camera={{
+          position: [0, 120, 90],
+          fov: 75,
+          near: 0.1,
+          far: 1000,
+        }}
+      >
         <pointLight position={[100, 100, 100]} />
         <Suspense fallback={null}>
           <mesh>
             <Body />
-            <group key="keys">
-              {["a", "b", "c", "d", "e"].map((el, idx) => {
-                return <Key position={[idx * KEYSPACE, 0, 0]} text={el} key={el} />;
-              })}
-            </group>
+            <Keyboard />
           </mesh>
           {viewControll && <OrbitControls />}
           <Environment preset="sunset" background />

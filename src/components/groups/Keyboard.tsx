@@ -10,13 +10,14 @@ export const Keyboard = () => {
   //state
   const [lang, setLang] = useState<"EN" | "KO">("EN");
   const [caps, setCaps] = useState<"OFF" | "ONCE" | "LOCK">("ONCE");
-  const shift = caps === "OFF" ? "DEFAULT" : "SHIFT";
+  const isShift = caps === "OFF" ? "VALUE" : "SHIFT";
   return (
     <group key="keys" position={[-41, 8, -15]} scale={0.9}>
       {KEYS.map((line, y) => {
         return (
           <group key={`line-${y}`}>
             {line.map((el, x) => {
+              const value = el[isShift] ?? el["VALUE"];
               return <Key key={value} text={value} position={[x * KEYSPACE, -y * KEYHEIGHT, y * KEYSPACE]} />;
             })}
           </group>

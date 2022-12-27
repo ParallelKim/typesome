@@ -1,55 +1,283 @@
 type KEY = {
   TYPE: "FUNCTION" | "SPECIAL" | "CHAR";
   VALUE: string;
-  SHIFT: string;
+  SHIFT?: string;
 };
 
-const KEYS: KEY = [];
+const KEYS: KEY[][] = [
+  [
+    { TYPE: "SPECIAL", VALUE: "`", SHIFT: "~" },
+    {
+      TYPE: "SPECIAL",
+      VALUE: "1",
+      SHIFT: "!",
+    },
+    {
+      TYPE: "SPECIAL",
+      VALUE: "2",
+      SHIFT: "@",
+    },
+    {
+      TYPE: "SPECIAL",
+      VALUE: "3",
+      SHIFT: "#",
+    },
+    {
+      TYPE: "SPECIAL",
+      VALUE: "4",
+      SHIFT: "$",
+    },
+    {
+      TYPE: "SPECIAL",
+      VALUE: "5",
+      SHIFT: "%",
+    },
+    {
+      TYPE: "SPECIAL",
+      VALUE: "6",
+      SHIFT: "^",
+    },
+    {
+      TYPE: "SPECIAL",
+      VALUE: "7",
+      SHIFT: "&",
+    },
+    {
+      TYPE: "SPECIAL",
+      VALUE: "8",
+      SHIFT: "*",
+    },
+    {
+      TYPE: "SPECIAL",
+      VALUE: "9",
+      SHIFT: "(",
+    },
+    {
+      TYPE: "SPECIAL",
+      VALUE: "0",
+      SHIFT: ")",
+    },
+    {
+      TYPE: "SPECIAL",
+      VALUE: "-",
+      SHIFT: "_",
+    },
+    {
+      TYPE: "SPECIAL",
+      VALUE: "=",
+      SHIFT: "+",
+    },
+    {
+      TYPE: "FUNCTION",
+      VALUE: "Back",
+    },
+  ],
+  [
+    {
+      TYPE: "FUNCTION",
+      VALUE: "Tab",
+    },
+    {
+      TYPE: "CHAR",
+      VALUE: "q",
+      SHIFT: "Q",
+    },
+    {
+      TYPE: "CHAR",
+      VALUE: "w",
+      SHIFT: "W",
+    },
+    {
+      TYPE: "CHAR",
+      VALUE: "e",
+      SHIFT: "E",
+    },
+    {
+      TYPE: "CHAR",
+      VALUE: "r",
+      SHIFT: "R",
+    },
+    {
+      TYPE: "CHAR",
+      VALUE: "t",
+      SHIFT: "T",
+    },
+    {
+      TYPE: "CHAR",
+      VALUE: "y",
+      SHIFT: "Y",
+    },
+    {
+      TYPE: "CHAR",
+      VALUE: "u",
+      SHIFT: "U",
+    },
+    {
+      TYPE: "CHAR",
+      VALUE: "i",
+      SHIFT: "I",
+    },
+    {
+      TYPE: "CHAR",
+      VALUE: "o",
+      SHIFT: "O",
+    },
+    {
+      TYPE: "CHAR",
+      VALUE: "p",
+      SHIFT: "P",
+    },
+    {
+      TYPE: "SPECIAL",
+      VALUE: "[",
+      SHIFT: "{",
+    },
+    {
+      TYPE: "SPECIAL",
+      VALUE: "]",
+      SHIFT: "}",
+    },
+    {
+      TYPE: "SPECIAL",
+      VALUE: "\\",
+      SHIFT: "|",
+    },
+  ],
+  [
+    {
+      TYPE: "FUNCTION",
+      VALUE: "Caps",
+    },
+    {
+      TYPE: "CHAR",
+      VALUE: "a",
+      SHIFT: "A",
+    },
+    {
+      TYPE: "CHAR",
+      VALUE: "s",
+      SHIFT: "S",
+    },
+    {
+      TYPE: "CHAR",
+      VALUE: "d",
+      SHIFT: "D",
+    },
+    {
+      TYPE: "CHAR",
+      VALUE: "f",
+      SHIFT: "F",
+    },
+    {
+      TYPE: "CHAR",
+      VALUE: "g",
+      SHIFT: "G",
+    },
+    {
+      TYPE: "CHAR",
+      VALUE: "h",
+      SHIFT: "H",
+    },
+    {
+      TYPE: "CHAR",
+      VALUE: "j",
+      SHIFT: "J",
+    },
+    {
+      TYPE: "CHAR",
+      VALUE: "k",
+      SHIFT: "K",
+    },
+    {
+      TYPE: "CHAR",
+      VALUE: "l",
+      SHIFT: "L",
+    },
+    {
+      TYPE: "SPECIAL",
+      VALUE: ";",
+      SHIFT: ":",
+    },
+    {
+      TYPE: "SPECIAL",
+      VALUE: "'",
+      SHIFT: '"',
+    },
+    {
+      TYPE: "FUNCTION",
+      VALUE: "Enter",
+    },
+  ],
+  [
+    {
+      TYPE: "FUNCTION",
+      VALUE: "Shift",
+    },
+    {
+      TYPE: "CHAR",
+      VALUE: "z",
+      SHIFT: "Z",
+    },
+    {
+      TYPE: "CHAR",
+      VALUE: "x",
+      SHIFT: "X",
+    },
+    {
+      TYPE: "CHAR",
+      VALUE: "c",
+      SHIFT: "C",
+    },
+    {
+      TYPE: "CHAR",
+      VALUE: "v",
+      SHIFT: "V",
+    },
+    {
+      TYPE: "CHAR",
+      VALUE: "b",
+      SHIFT: "B",
+    },
+    {
+      TYPE: "CHAR",
+      VALUE: "n",
+      SHIFT: "N",
+    },
+    {
+      TYPE: "CHAR",
+      VALUE: "m",
+      SHIFT: "M",
+    },
+    {
+      TYPE: "SPECIAL",
+      VALUE: ",",
+      SHIFT: "<",
+    },
+    {
+      TYPE: "SPECIAL",
+      VALUE: ".",
+      SHIFT: ">",
+    },
+    {
+      TYPE: "SPECIAL",
+      VALUE: "/",
+      SHIFT: "?",
+    },
+    {
+      TYPE: "FUNCTION",
+      VALUE: "Shift",
+    },
+  ],
+  [
+    { TYPE: "FUNCTION", VALUE: "Up" },
+    { TYPE: "FUNCTION", VALUE: "Down" },
+    { TYPE: "FUNCTION", VALUE: "Space" },
+    // { TYPE: "FUNCTION", VALUE: "Alt" },
+    { TYPE: "FUNCTION", VALUE: "Bold" },
+  ],
+];
 
 export default KEYS;
-
-// 1st Draft
-// const KEYS = {
-//   FUNCTION: { LEFT: [["Tab"], ["CapsLock"], ["Shift"]], RIGHT: [["Back"], ["ENTER"], ["SHIFT"]] },
-//   SPEACIAL: {
-//     NORMAL: [
-//       ["`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "="],
-//       ["[", "]", "₩"],
-//       [";", "'"],
-//       [",", ".", "/"],
-//     ],
-//     SHIFT: [
-//       ["~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "+"],
-//       ["{", "}", "|"],
-//       [":", '"'],
-//       ["<", ">", "?"],
-//     ],
-//   },
-//   EN: {
-//     NORMAL: [
-//       ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
-//       ["a", "s", "d", "f", "g", "h", "j", "j", "k", "l"],
-//       ["z", "x", "c", "v", "b", "n", "m"],
-//     ],
-//     SHIFT: [
-//       ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
-//       ["A", "S", "D", "F", "G", "H", "J", "J", "K", "L"],
-//       ["Z", "X", "C", "V", "B", "N", "M"],
-//     ],
-//   },
-//   KO: {
-//     NORMAL: [
-//       ["ㅂ", "ㅈ", "ㄷ", "ㄱ", "ㅅ", "ㅛ", "ㅕ", "ㅑ", "ㅐ", "ㅔ"],
-//       ["ㅁ", "ㄴ", "ㅇ", "ㄹ", "ㅎ", "ㅗ", "ㅓ", "ㅏ", "ㅣ"],
-//       ["ㅋ", "ㅌ", "ㅊ", "ㅍ", "ㅠ", "ㅜ", "ㅡ"],
-//     ],
-//     SHIFT: [
-//       ["ㅃ", "ㅉ", "ㄸ", "ㄲ", "ㅆ", "ㅛ", "ㅕ", "ㅑ", "ㅒ", "ㅖ"],
-//       ["ㅁ", "ㄴ", "ㅇ", "ㄹ", "ㅎ", "ㅗ", "ㅓ", "ㅏ", "ㅣ"],
-//       ["ㅋ", "ㅌ", "ㅊ", "ㅍ", "ㅠ", "ㅜ", "ㅡ"],
-//     ],
-//   },
-// };
 
 // 2nd Draft
 // const KEYS: KEY[][] = [

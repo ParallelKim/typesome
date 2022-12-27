@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { SIZE, KEYS } from "../../constants";
+import { KEYS } from "../../constants";
 import { Key } from "../models";
 
 export const Keyboard = () => {
   //constant option
-  const KEYSPACE = SIZE.KEY.SMALL + SIZE.SPACE;
+  const KEYSPACE = 5 + 2;
   const KEYHEIGHT = 2;
 
   //state
@@ -17,17 +17,6 @@ export const Keyboard = () => {
         return (
           <group key={`line-${y}`}>
             {line.map((el, x) => {
-              const keyType = el.type;
-              var value = "";
-              if (keyType === "CHAR") {
-                value = el[lang]?.[shift] ?? "";
-              } else {
-                if (el[keyType]?.SHIFT) {
-                  value = el[keyType]?.[shift] ?? "";
-                } else {
-                  value = el[keyType]?.DEFAULT ?? "";
-                }
-              }
               return <Key key={value} text={value} position={[x * KEYSPACE, -y * KEYHEIGHT, y * KEYSPACE]} />;
             })}
           </group>

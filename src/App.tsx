@@ -3,9 +3,11 @@ import { Canvas } from "@react-three/fiber";
 import { Body, Key } from "./components/models";
 import { Suspense, useState } from "react";
 import { Environment, OrbitControls } from "@react-three/drei";
-import { KEYS } from "./constants";
+import { KEYS, SIZE } from "./constants";
 
 function App() {
+  const KEYSPACE = SIZE.KEY.SMALL + SIZE.SPACE;
+
   const [lang, setLang] = useState("en");
   const [viewControll, setViewControll] = useState(true);
   const [current, setCurrent] = useState();
@@ -17,10 +19,11 @@ function App() {
         <Suspense fallback={null}>
           <mesh>
             <Body />
-            <mesh position={[0, 20, 30]} rotation={[0, Math.PI, 0]}>
-              <Key text="TEST" />
-              <Key text="TEST" />
-            </mesh>
+            <group key="keys">
+              {["a", "b", "c", "d", "e"].map((el, idx) => {
+                return <Key position={[idx * KEYSPACE, 0, 0]} text={el} key={el} />;
+              })}
+            </group>
           </mesh>
           {viewControll && <OrbitControls />}
           <Environment preset="sunset" background />

@@ -6,17 +6,20 @@ import { useMemo, useRef } from "react";
 //
 
 interface KeyProps {
-  text?: string;
-  position?: [number, number, number];
+  text: string;
+  position: [number, number, number];
+  onClick?: (e: any) => void;
 }
 
-export default function Key({ text, position }: KeyProps) {
+export default function Key({ text = "", position = [0, 0, 0], onClick }: KeyProps) {
   //constant option
   const KEY_SIZE = 5;
 
   //state
-  const [x, y, z] = position ?? [0, 0, 0];
+  const [x, y, z] = position;
   const materials = useLoader(MTLLoader, "materials/Typewriter_Key.mtl");
+
+  //load model and make instance
   const obj = useLoader(OBJLoader, "models/Typewriter_Key.obj", (loader) => {
     materials.preload();
     loader.setMaterials(materials);
@@ -24,10 +27,10 @@ export default function Key({ text, position }: KeyProps) {
   const instance = useMemo(() => obj.clone(), [obj]);
 
   return (
-    <mesh position={[0 + x, 20 + y, 30 + z]} rotation={[0, Math.PI, 0]}>
+    <mesh position={[0 + x, 20 + y, 30 + z]} rotation={[0, Math.PI, 0]} onClick={onClick}>
       <primitive object={instance} scale={KEY_SIZE / 2} roatation={[0, 0, 0]}>
         <Text position={[0, 0.25, 0.4]} scale={[10, 10, 10]} rotation={[Math.PI * 0.5, Math.PI, 0]} color={"black"} anchorX="center" anchorY="top">
-          {text ?? ""}
+          {text}
         </Text>
       </primitive>
     </mesh>

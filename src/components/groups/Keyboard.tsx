@@ -12,7 +12,7 @@ type CHARACTER = {
 type CAPS_AVAILABLE = "OFF" | "ONCE" | "LOCK";
 
 type ACTION_MAP_TYPE = {
-  FUNCTION: { [key: string]: Function };
+  FUNCTION: { [key: string]: () => true };
   CHAR: undefined;
   SPECIAL: undefined;
 };
@@ -31,16 +31,25 @@ export const Keyboard = () => {
   const [font, setFont] = useState<CHARACTER>({ value: "", size: 16, bold: false });
 
   //functions
-  const typewrite = (value: string, space: number = 1) => {
+  const typewrite: (value: string, space?: number) => true = (value, space = 1) => {
     console.log(value);
     setLine([...line, { value, size: font.size, bold: font.bold }]);
     setLineWidth((lineWidth) => lineWidth + font.size * space);
+    return true;
   };
 
-  const newLine = () => {
+  const newLine: () => true = () => {
     //add sound effect
     setPaper((paper) => [...paper, line]);
     setLine([]);
+    return true;
+  };
+
+  const changeFontSize: (change: number) => true = (change) => {
+    if (font.size <= 8) return true;
+    if (font.size >= 30) return true;
+    setFont((font) => ({ ...font, size: font.size + change }));
+    return true;
   };
 
   const SHIFT_MAP: { [key: string]: CAPS_AVAILABLE } = {
@@ -51,10 +60,7 @@ export const Keyboard = () => {
 
   const ACTION_MAP: ACTION_MAP_TYPE = {
     FUNCTION: {
-      Tab: () => {
-        typewrite("    ", 4);
-        return true;
-      },
+      Tab: () => typewrite("    ", 4),
       Caps: () => {
         setCaps(() => {
           if (caps === "LOCK") return "OFF";
@@ -66,16 +72,8 @@ export const Keyboard = () => {
         setCaps(SHIFT_MAP[caps]);
         return true;
       },
-      Up: () => {
-        if (font.size >= 30) return true;
-        setFont({ ...font, size: font.size + 2 });
-        return true;
-      },
-      Down: () => {
-        if (font.size <= 8) return true;
-        setFont({ ...font, size: font.size - 2 });
-        return true;
-      },
+      Up: () => changeFontSize(+2),
+      Down: () => changeFontSize(-2),
       Back: () => {
         if (line.length === 0) return true;
         const temp = [...line];
@@ -84,10 +82,7 @@ export const Keyboard = () => {
         return true;
       },
       Enter: newLine,
-      Space: () => {
-        typewrite(" ");
-        return true;
-      },
+      Space: () => typewrite(" "),
     },
     CHAR: undefined,
     SPECIAL: undefined,

@@ -43,6 +43,7 @@ function Keyboard() {
   //functions
   const typewrite: (value: string, space?: number) => true = (value, space = 1) => {
     console.log(value);
+    caps === "ONCE" && setCaps("OFF");
     setLine([...line, { value, size: font.size, bold: font.bold }]);
     setLineWidth((lineWidth) => lineWidth + font.size * space);
     return true;
@@ -100,8 +101,10 @@ function Keyboard() {
   const onClick = (e: ThreeEvent<MouseEvent>, el: KEY_TYPE) => {
     e.stopPropagation();
     typeSound?.play();
-    ACTION_MAP[el.TYPE]?.[el.VALUE]() ?? typewrite(el.VALUE); // it would show undefined for all character and make default function work
+    ACTION_MAP[el.TYPE]?.[el.VALUE]() ?? typewrite(capedKeyValue(el)); // it would show undefined for all character and make default function work
   };
+
+  const capedKeyValue = (el: KEY_TYPE) => el[caps === "OFF" ? "VALUE" : "SHIFT"] ?? el["VALUE"];
 
   return (
     <group key="keys" position={[-4, 8, -15]} scale={0.9}>
@@ -109,8 +112,7 @@ function Keyboard() {
         return (
           <group position={[-line.length * 3, -y * KEYHEIGHT, y * KEYSPACE]} key={`line-${y}`}>
             {line.map((el, x) => {
-              const value = el[caps === "OFF" ? "VALUE" : "SHIFT"] ?? el["VALUE"];
-              return <Key key={`${x}-${value}`} text={value} position={[x * KEYSPACE, 0, 0]} onClick={(e) => onClick(e, el)} />;
+              return <Key key={`${x}-${el["VALUE"]}`} text={capedKeyValue(el)} position={[x * KEYSPACE, 0, 0]} onClick={(e) => onClick(e, el)} />;
             })}
           </group>
         );

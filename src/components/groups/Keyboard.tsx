@@ -30,10 +30,9 @@ function Keyboard() {
   const [paper, setPaper] = useState<CHARACTER[][]>([]);
   const [font, setFont] = useState<CHARACTER>({ value: "", size: 16, bold: false });
 
-  //sound effect
+  //sound effects
   const [typeSound, setTypeSound] = useState<HTMLAudioElement>();
   const [enterSound, setEnterSound] = useState<HTMLAudioElement>();
-
   useEffect(() => {
     const typeSound = new Audio("sounds/type.mp3");
     setTypeSound(typeSound);
@@ -50,7 +49,7 @@ function Keyboard() {
   };
 
   const newLine: () => true = () => {
-    //add sound effect
+    enterSound?.play();
     setPaper((paper) => [...paper, line]);
     setLine([]);
     return true;
@@ -100,7 +99,6 @@ function Keyboard() {
 
   const onClick = (e: ThreeEvent<MouseEvent>, el: KEY_TYPE) => {
     e.stopPropagation();
-    //add sound effect
     typeSound?.play();
     ACTION_MAP[el.TYPE]?.[el.VALUE]() ?? typewrite(el.VALUE); // it would show undefined for all character and make default function work
   };

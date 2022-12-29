@@ -1,9 +1,9 @@
 {
+  "homepage": "https://parallelkim.github.io/typesome/",
   "name": "typesome",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://parallelkim.github.io/typesome/",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

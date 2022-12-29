@@ -18,25 +18,29 @@ type ACTION_MAP_TYPE = {
 };
 
 export const Keyboard = () => {
-  //constant option
+  //constant options
   const KEYSPACE = 5 + 2;
   const KEYHEIGHT = 2;
 
-  //state
-  //   const [lang, setLang] = useState<"EN" | "KO">("EN");
+  //states
+  //   const [lang, setLang] = useState<"EN" | "KO">("EN"); // not implemented yet
   const [caps, setCaps] = useState<CAPS_AVAILABLE>("ONCE");
+  const [line, setLine] = useState<CHARACTER[]>([]);
+  const [lineWidth, setLineWidth] = useState(0);
   const [paper, setPaper] = useState<CHARACTER[][]>([]);
-  const [currentFont, setCurrentFont] = useState<CHARACTER>({ value: "", size: 16, bold: false });
-  const isShift = caps === "OFF" ? "VALUE" : "SHIFT";
+  const [font, setFont] = useState<CHARACTER>({ value: "", size: 16, bold: false });
 
-  //function
-  const typewrite = (value: string) => {
+  //functions
+  const typewrite = (value: string, space: number = 1) => {
     console.log(value);
+    setLine([...line, { value, size: font.size, bold: font.bold }]);
+    setLineWidth((lineWidth) => lineWidth + font.size * space);
   };
 
   const newLine = () => {
     //add sound effect
-    setPaper((paper) => [...paper, []]);
+    setPaper((paper) => [...paper, line]);
+    setLine([]);
   };
 
   const SHIFT_MAP: { [key: string]: CAPS_AVAILABLE } = {
@@ -47,25 +51,43 @@ export const Keyboard = () => {
 
   const ACTION_MAP: ACTION_MAP_TYPE = {
     FUNCTION: {
-      Tab: () => {},
+      Tab: () => {
+        typewrite("    ", 4);
+        return true;
+      },
       Caps: () => {
-        setCaps((caps) => {
+        setCaps(() => {
           if (caps === "LOCK") return "OFF";
           return "LOCK";
         });
         return true;
       },
       Shift: () => {
-        setCaps((caps) => {
-          return SHIFT_MAP[caps];
-        });
+        setCaps(SHIFT_MAP[caps]);
         return true;
       },
-      Up: () => {},
-      Down: () => {},
-      Back: () => {},
+      Up: () => {
+        if (font.size >= 30) return true;
+        setFont({ ...font, size: font.size + 2 });
+        return true;
+      },
+      Down: () => {
+        if (font.size <= 8) return true;
+        setFont({ ...font, size: font.size - 2 });
+        return true;
+      },
+      Back: () => {
+        if (line.length === 0) return true;
+        const temp = [...line];
+        temp[temp.length - 1].value = "OVERWROTE";
+        setLine(temp);
+        return true;
+      },
       Enter: newLine,
-      Space: () => {},
+      Space: () => {
+        typewrite(" ");
+        return true;
+      },
     },
     CHAR: undefined,
     SPECIAL: undefined,
@@ -83,7 +105,7 @@ export const Keyboard = () => {
         return (
           <group position={[-line.length * 3, -y * KEYHEIGHT, y * KEYSPACE]} key={`line-${y}`}>
             {line.map((el, x) => {
-              const value = el[isShift] ?? el["VALUE"];
+              const value = el[caps === "OFF" ? "VALUE" : "SHIFT"] ?? el["VALUE"];
               return <Key key={`${x}-${value}`} text={value} position={[x * KEYSPACE, 0, 0]} onClick={(e) => onClick(e, el)} />;
             })}
           </group>

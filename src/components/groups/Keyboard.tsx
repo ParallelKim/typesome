@@ -1,5 +1,5 @@
 import { ThreeEvent } from "@react-three/fiber";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { KEYS, KEY_TYPE } from "../../constants";
 import { Key } from "../models";
 
@@ -17,7 +17,7 @@ type ACTION_MAP_TYPE = {
   SPECIAL: undefined;
 };
 
-export const Keyboard = () => {
+function Keyboard() {
   //constant options
   const KEYSPACE = 5 + 2;
   const KEYHEIGHT = 2;
@@ -29,6 +29,17 @@ export const Keyboard = () => {
   const [lineWidth, setLineWidth] = useState(0);
   const [paper, setPaper] = useState<CHARACTER[][]>([]);
   const [font, setFont] = useState<CHARACTER>({ value: "", size: 16, bold: false });
+
+  //sound effect
+  const [typeSound, setTypeSound] = useState<HTMLAudioElement>();
+  const [enterSound, setEnterSound] = useState<HTMLAudioElement>();
+
+  useEffect(() => {
+    const typeSound = new Audio("sounds/type.mp3");
+    setTypeSound(typeSound);
+    const enterSound = new Audio("sounds/line_break.mp3");
+    setEnterSound(enterSound);
+  }, []);
 
   //functions
   const typewrite: (value: string, space?: number) => true = (value, space = 1) => {
@@ -46,8 +57,7 @@ export const Keyboard = () => {
   };
 
   const changeFontSize: (change: number) => true = (change) => {
-    if (font.size <= 8) return true;
-    if (font.size >= 30) return true;
+    if (font.size <= 8 || font.size >= 30) return true;
     setFont((font) => ({ ...font, size: font.size + change }));
     return true;
   };
@@ -91,6 +101,7 @@ export const Keyboard = () => {
   const onClick = (e: ThreeEvent<MouseEvent>, el: KEY_TYPE) => {
     e.stopPropagation();
     //add sound effect
+    typeSound?.play();
     ACTION_MAP[el.TYPE]?.[el.VALUE]() ?? typewrite(el.VALUE); // it would show undefined for all character and make default function work
   };
 
@@ -108,4 +119,6 @@ export const Keyboard = () => {
       })}
     </group>
   );
-};
+}
+
+export default Keyboard;

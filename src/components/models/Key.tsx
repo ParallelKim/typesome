@@ -1,14 +1,13 @@
-import { useGraph, useLoader } from "@react-three/fiber";
+import { ThreeEvent, useGraph, useLoader } from "@react-three/fiber";
 import { Text } from "@react-three/drei";
 import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import { useMemo, useRef } from "react";
-//
 
 interface KeyProps {
   text: string;
   position: [number, number, number];
-  onClick?: (e: any) => void;
+  onClick?: (e: ThreeEvent<MouseEvent>) => void;
 }
 
 export default function Key({ text = "", position = [0, 0, 0], onClick }: KeyProps) {

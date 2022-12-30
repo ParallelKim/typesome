@@ -1,4 +1,4 @@
-import Sound from "./Sound";
-import Camera from "./Camera";
+import SoundManager from "./SoundManager";
+import CameraManager from "./CameraManager";
 
-export { Sound, Camera };
+export { SoundManager, CameraManager };

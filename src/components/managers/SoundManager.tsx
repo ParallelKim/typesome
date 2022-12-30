@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { soundStore } from "../../stores";
 
-const Sound = () => {
+const SoundManager = () => {
   const { sound, removeSound } = soundStore();
 
   setInterval(() => {
@@ -13,4 +13,4 @@ const Sound = () => {
   return <></>;
 };
 
-export default Sound;
+export default SoundManager;

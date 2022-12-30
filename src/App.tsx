@@ -7,7 +7,6 @@ import { Keyboard } from "./components/groups";
 
 function App() {
   const [viewControll, setViewControll] = useState(true);
-  const [current, setCurrent] = useState();
 
   return (
     <div id="canvas">

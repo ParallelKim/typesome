@@ -2,12 +2,8 @@ import { ThreeEvent } from "@react-three/fiber";
 import { useEffect, useState } from "react";
 import { KEYS, KEY_TYPE } from "../../constants";
 import { Key } from "../models";
-
-type CHARACTER = {
-  value: string;
-  size: number;
-  bold: boolean;
-};
+import { CHARACTER } from "../../types";
+import { soundStore, paperStore } from "../../stores";
 
 type CAPS_AVAILABLE = "OFF" | "ONCE" | "LOCK";
 
@@ -22,37 +18,28 @@ function Keyboard() {
   const KEYSPACE = 5 + 2;
   const KEYHEIGHT = 2;
 
+  const { playTypeSound, playEnterSound } = soundStore();
+  const { line, setLine, addLine, removeChar } = paperStore();
+
   //states
   //   const [lang, setLang] = useState<"EN" | "KO">("EN"); // not implemented yet
   const [caps, setCaps] = useState<CAPS_AVAILABLE>("ONCE");
-  const [line, setLine] = useState<CHARACTER[]>([]);
   const [lineWidth, setLineWidth] = useState(0);
-  const [paper, setPaper] = useState<CHARACTER[][]>([]);
   const [font, setFont] = useState<CHARACTER>({ value: "", size: 16, bold: false });
-
-  //sound effects
-  const [typeSound, setTypeSound] = useState<HTMLAudioElement>();
-  const [enterSound, setEnterSound] = useState<HTMLAudioElement>();
-  useEffect(() => {
-    const typeSound = new Audio("sounds/type.mp3");
-    setTypeSound(typeSound);
-    const enterSound = new Audio("sounds/line_break.mp3");
-    setEnterSound(enterSound);
-  }, []);
 
   //functions
   const typewrite: (value: string, space?: number) => true = (value, space = 1) => {
     console.log(value);
     caps === "ONCE" && setCaps("OFF");
-    setLine([...line, { value, size: font.size, bold: font.bold }]);
-    setLineWidth((lineWidth) => lineWidth + font.size * space);
+    setLine({ ...font, value });
+    setLineWidth(font.size * space);
     return true;
   };
 
   const newLine: () => true = () => {
-    enterSound?.play();
-    setPaper((paper) => [...paper, line]);
-    setLine([]);
+    playEnterSound();
+    addLine();
+
     return true;
   };
 
@@ -86,9 +73,7 @@ function Keyboard() {
       Down: () => changeFontSize(-2),
       Back: () => {
         if (line.length === 0) return true;
-        const temp = [...line];
-        temp[temp.length - 1].value = "OVERWROTE";
-        setLine(temp);
+        removeChar();
         return true;
       },
       Enter: newLine,
@@ -100,7 +85,7 @@ function Keyboard() {
 
   const onClick = (e: ThreeEvent<MouseEvent>, el: KEY_TYPE) => {
     e.stopPropagation();
-    typeSound?.play();
+    playTypeSound();
     ACTION_MAP[el.TYPE]?.[el.VALUE]() ?? typewrite(capedKeyValue(el)); // it would show undefined for all character and make default function work
   };
 

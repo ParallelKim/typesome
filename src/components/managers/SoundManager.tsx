@@ -1,16 +1,10 @@
-import { useEffect, useState } from "react";
+import { useFrame } from "@react-three/fiber";
 import { soundStore } from "../../stores";
 
 const SoundManager = () => {
   const { sound, removeSound } = soundStore();
 
-  setInterval(() => {
-    sound.map((item) => {
-      item.ended ? removeSound() : item.play();
-    });
-  }, 100);
-
-  return <></>;
+  return <>{sound}</>;
 };
 
 export default SoundManager;

@@ -1,9 +1,10 @@
 import { ThreeEvent } from "@react-three/fiber";
-import { useEffect, useState } from "react";
-import { KEYS, KEY_TYPE } from "../../constants";
+import { useState } from "react";
+
 import { Key } from "../models";
-import { CHARACTER } from "../../types";
+import { CHAR_TYPE, KEY_TYPE } from "../../types";
 import { soundStore, paperStore } from "../../stores";
+import { KEY_MAP } from "../../constants";
 
 type CAPS_AVAILABLE = "OFF" | "ONCE" | "LOCK";
 
@@ -13,11 +14,12 @@ type ACTION_MAP_TYPE = {
   SPECIAL: undefined;
 };
 
-function Keyboard() {
+const Keyboard = () => {
   //constant options
   const KEYSPACE = 5 + 2;
   const KEYHEIGHT = 2;
 
+  //stores
   const { playTypeSound, playEnterSound } = soundStore();
   const { line, setLine, addLine, removeChar } = paperStore();
 
@@ -25,7 +27,7 @@ function Keyboard() {
   //   const [lang, setLang] = useState<"EN" | "KO">("EN"); // not implemented yet
   const [caps, setCaps] = useState<CAPS_AVAILABLE>("ONCE");
   const [lineWidth, setLineWidth] = useState(0);
-  const [font, setFont] = useState<CHARACTER>({ value: "", size: 16, bold: false });
+  const [font, setFont] = useState<CHAR_TYPE>({ value: "", size: 16, bold: false });
 
   //functions
   const typewrite: (value: string, space?: number) => true = (value, space = 1) => {
@@ -93,7 +95,7 @@ function Keyboard() {
 
   return (
     <group key="keys" position={[-4, 8, -15]} scale={0.9}>
-      {KEYS.map((line, y) => {
+      {KEY_MAP.map((line, y) => {
         return (
           <group position={[-line.length * 3, -y * KEYHEIGHT, y * KEYSPACE]} key={`line-${y}`}>
             {line.map((el, x) => {
@@ -104,6 +106,6 @@ function Keyboard() {
       })}
     </group>
   );
-}
+};
 
 export default Keyboard;

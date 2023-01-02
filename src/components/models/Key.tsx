@@ -10,7 +10,7 @@ interface KeyProps {
   onClick?: (e: ThreeEvent<MouseEvent>) => void;
 }
 
-export default function Key({ text = "", position = [0, 0, 0], onClick }: KeyProps) {
+const Key = ({ text = "", position = [0, 0, 0], onClick }: KeyProps) => {
   //constant option
   const KEY_SIZE = 5;
 
@@ -34,4 +34,6 @@ export default function Key({ text = "", position = [0, 0, 0], onClick }: KeyPro
       </primitive>
     </mesh>
   );
-}
+};
+
+export default Key;

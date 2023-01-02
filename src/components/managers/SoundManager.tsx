@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { soundStore } from "../../stores";
 
 const SoundManager = () => {
@@ -8,7 +7,7 @@ const SoundManager = () => {
     sound.map((item) => {
       item.ended ? removeSound() : item.play();
     });
-  }, 100);
+  }, 50);
 
   return <></>;
 };

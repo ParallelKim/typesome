@@ -1,4 +1,3 @@
-import KEYS, { KEY_TYPE } from "./keys";
+import KEY_MAP from "./keyMap";
 
-export { KEYS };
-export type { KEY_TYPE };
+export { KEY_MAP };

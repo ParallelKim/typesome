@@ -1,10 +1,6 @@
-export type KEY_TYPE = {
-  TYPE: "FUNCTION" | "SPECIAL" | "CHAR";
-  VALUE: string;
-  SHIFT?: string;
-};
+import { KEY_TYPE } from "../types";
 
-const KEYS: KEY_TYPE[][] = [
+const KEY_MAP: KEY_TYPE[][] = [
   [
     { TYPE: "SPECIAL", VALUE: "`", SHIFT: "~" },
     {
@@ -277,4 +273,4 @@ const KEYS: KEY_TYPE[][] = [
   ],
 ];
 
-export default KEYS;
+export default KEY_MAP;

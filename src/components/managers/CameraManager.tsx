@@ -1,3 +1,3 @@
-const CmaeraManager = () => {};
+const CameraManager = () => {};
 
-export default CmaeraManager;
+export default CameraManager;

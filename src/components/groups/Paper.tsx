@@ -1,19 +1,53 @@
+import { Text } from "@react-three/drei";
+
 import { paperStore } from "../../stores";
+import { DefaultText } from "../models";
 
 const Paper = () => {
   //constant options
   const HEAD_SPACE = 20;
   const DEFAULT_HEIGHT = 40;
+  const X_SPACE = 10;
+  const Y_SPACE = 15;
 
   //stores
-  const { line, paper, setLine, addLine, removeChar } = paperStore();
+  const { line, paper } = paperStore();
 
   return (
-    <group key="paper" position={[0, 70, -20]}>
+    <group key="paper" position={[0, 70 + (paper.length * Y_SPACE * 0.9) / 2, -20]}>
       <mesh>
-        <boxGeometry args={[100, DEFAULT_HEIGHT, 0.05]} />
+        <boxGeometry args={[100, DEFAULT_HEIGHT + paper.length * Y_SPACE * 0.9, 0.05]} />
       </mesh>
-      <group>{paper.map((line, index) => {})}</group>
+      <group key="contents" position={[-40, 5 + (paper.length * Y_SPACE * 0.9) / 2, 0]}>
+        <group key="prev-lines">
+          {paper.map((ln, y_idx) => {
+            return (
+              <group key={`prev-line-${y_idx}`}>
+                {ln.map((char, x_idx) => (
+                  <DefaultText
+                    key={`${x_idx} of ${y_idx} line`}
+                    position={[x_idx * X_SPACE, -y_idx * Y_SPACE, 0.4]}
+                    scale={0.5}
+                    size={char.size}
+                    value={char.value}
+                  />
+                ))}
+              </group>
+            );
+          })}
+        </group>
+        <group key="current-line">
+          {line.map((char, idx) => (
+            <DefaultText
+              key={`${idx} char of current line`}
+              position={[idx * X_SPACE, -paper.length * Y_SPACE, 0.4]}
+              scale={0.5}
+              size={char.size}
+              value={char.value}
+            />
+          ))}
+        </group>
+      </group>
     </group>
   );
 };

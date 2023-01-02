@@ -46,7 +46,8 @@ const Keyboard = () => {
   };
 
   const changeFontSize: (change: number) => true = (change) => {
-    if (font.size <= 8 || font.size >= 30) return true;
+    if ((font.size <= 8 && change < 0) || (font.size >= 24 && change > 0)) return true;
+    console.log(font.size + change);
     setFont((font) => ({ ...font, size: font.size + change }));
     return true;
   };

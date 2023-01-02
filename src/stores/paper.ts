@@ -17,7 +17,7 @@ const paperStore = create<STORETYPE>((set) => ({
   paper: [],
   setLine: (newChar: CHAR_TYPE) => set((state) => ({ line: [...state.line, newChar] })),
   setLineWidth: (newWidth: number) => set((state) => ({ lineWidth: state.lineWidth + newWidth })),
-  addLine: () => set((state) => ({ paper: [...state.paper, state.line] })),
+  addLine: () => set((state) => ({ paper: [...state.paper, state.line], line: [] })),
   removeChar: () => set((state) => ({ line: state.line.slice(0, state.line.length - 1) })),
 }));
 

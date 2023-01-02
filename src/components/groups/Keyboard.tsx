@@ -30,14 +30,7 @@ const Keyboard = () => {
   const [font, setFont] = useState<CHAR_TYPE>({ value: "", size: 16, bold: false });
 
   //functions
-  window.onkeydown = (e) => {
-    console.log(e, KEY_MAP[e.key]);
-    if (!KEY_MAP[e.key]) return;
-    onClick(e as any, KEY_MAP[e.key]);
-  };
-
   const typewrite: (value: string, space?: number) => true = (value, space = 1) => {
-    console.log(value);
     caps === "ONCE" && setCaps("OFF");
     setLine({ ...font, value });
     setLineWidth(font.size * space);
@@ -87,18 +80,33 @@ const Keyboard = () => {
       },
       Enter: newLine,
       Space: () => typewrite(" "),
+      Bold: () => {
+        setFont((font) => ({ ...font, bold: !font.bold }));
+        return true;
+      },
     },
     CHAR: undefined,
     SPECIAL: undefined,
   };
 
   const onClick = (e: ThreeEvent<MouseEvent>, el: KEY_TYPE) => {
+    console.log(el, caps);
     e.stopPropagation();
     playTypeSound();
     ACTION_MAP[el.TYPE]?.[el.VALUE]() ?? typewrite(capedKeyValue(el)); // it would show undefined for all character and make default function work
   };
 
   const capedKeyValue = (el: KEY_TYPE) => el[caps === "OFF" ? "VALUE" : "SHIFT"] ?? el["VALUE"];
+
+  //keyboard event
+  window.onkeydown = (e) => {
+    if (e.key === "Shift") return setCaps("LOCK");
+  };
+  window.onkeyup = (e) => {
+    if (e.key === "Shift") return setCaps("OFF");
+    if (!KEY_MAP[e.key]) return;
+    onClick(e as any, KEY_MAP[e.key]);
+  };
 
   return (
     <group key="keys" position={[-4, 8, -15]} scale={0.9}>

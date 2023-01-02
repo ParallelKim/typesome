@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Key } from "../models";
 import { CHAR_TYPE, KEY_TYPE } from "../../types";
 import { soundStore, paperStore } from "../../stores";
-import { KEY_MAP } from "../../constants";
+import { KEY_LIST, KEY_MAP } from "../../constants";
 
 type CAPS_AVAILABLE = "OFF" | "ONCE" | "LOCK";
 
@@ -25,11 +25,17 @@ const Keyboard = () => {
 
   //states
   //   const [lang, setLang] = useState<"EN" | "KO">("EN"); // not implemented yet
-  const [caps, setCaps] = useState<CAPS_AVAILABLE>("ONCE");
+  const [caps, setCaps] = useState<CAPS_AVAILABLE>("OFF");
   const [lineWidth, setLineWidth] = useState(0);
   const [font, setFont] = useState<CHAR_TYPE>({ value: "", size: 16, bold: false });
 
   //functions
+  window.onkeydown = (e) => {
+    console.log(e, KEY_MAP[e.key]);
+    if (!KEY_MAP[e.key]) return;
+    onClick(e as any, KEY_MAP[e.key]);
+  };
+
   const typewrite: (value: string, space?: number) => true = (value, space = 1) => {
     console.log(value);
     caps === "ONCE" && setCaps("OFF");
@@ -96,7 +102,7 @@ const Keyboard = () => {
 
   return (
     <group key="keys" position={[-4, 8, -15]} scale={0.9}>
-      {KEY_MAP.map((line, y) => {
+      {KEY_LIST.map((line, y) => {
         return (
           <group position={[-line.length * 3, -y * KEYHEIGHT, y * KEYSPACE]} key={`line-${y}`}>
             {line.map((el, x) => {

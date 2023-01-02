@@ -4,6 +4,7 @@ import { paperStore } from "../../stores";
 import { DefaultText } from "../models";
 
 const Paper = () => {
+  //refactor later : set initial positions for all group
   //constant options
   const HEAD_SPACE = 20;
   const DEFAULT_HEIGHT = 40;
@@ -14,11 +15,11 @@ const Paper = () => {
   const { line, paper } = paperStore();
 
   return (
-    <group key="paper" position={[0, 70 + (paper.length * Y_SPACE * 0.9) / 2, -20]}>
+    <group key="paper" position={[0, 70 + (paper.length * Y_SPACE) / 2, -20]}>
       <mesh>
-        <boxGeometry args={[100, DEFAULT_HEIGHT + paper.length * Y_SPACE * 0.9, 0.05]} />
+        <boxGeometry args={[100, DEFAULT_HEIGHT + paper.length * Y_SPACE, 0.05]} />
       </mesh>
-      <group key="contents" position={[-40, 5 + (paper.length * Y_SPACE * 0.9) / 2, 0]}>
+      <group key="contents" position={[-40, 5 + (paper.length * Y_SPACE) / 2, 0]}>
         <group key="prev-lines">
           {paper.map((ln, y_idx) => {
             return (

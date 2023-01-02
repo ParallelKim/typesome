@@ -15,7 +15,7 @@ function App() {
       <SoundManager />
       <Canvas
         camera={{
-          position: [0, 120, 90],
+          position: [0, 130, 80],
           fov: 75,
           near: 0.1,
           far: 1000,

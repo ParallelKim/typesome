@@ -1,6 +1,6 @@
 import { KEY_TYPE } from "../types";
 
-const KEY_MAP: KEY_TYPE[][] = [
+const KEY_LIST: KEY_TYPE[][] = [
   [
     { TYPE: "SPECIAL", VALUE: "`", SHIFT: "~" },
     {
@@ -273,4 +273,13 @@ const KEY_MAP: KEY_TYPE[][] = [
   ],
 ];
 
-export default KEY_MAP;
+export const KEY_MAP: { [key: string]: KEY_TYPE } = {};
+
+for (const row of KEY_LIST) {
+  for (const key of row) {
+    KEY_MAP[key.VALUE] = key;
+    KEY_MAP[key.SHIFT ?? ""] = key;
+  }
+}
+
+export default KEY_LIST;

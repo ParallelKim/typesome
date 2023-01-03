@@ -15,7 +15,7 @@ const Paper = () => {
   const { line, paper } = paperStore();
 
   return (
-    <group key="paper" position={[0, 50 + (paper.length * Y_SPACE) / 2, -20]}>
+    <group key="paper" position={[0, 50 + (paper.length * Y_SPACE) / 2, -40]}>
       <mesh>
         <boxGeometry args={[100, DEFAULT_HEIGHT + paper.length * Y_SPACE, 0.05]} />
       </mesh>

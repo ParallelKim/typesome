@@ -273,8 +273,9 @@ const KEY_LIST: KEY_TYPE[][] = [
   ],
 ];
 
-export const KEY_MAP: { [key: string]: KEY_TYPE } = {};
+export default KEY_LIST;
 
+const KEY_MAP: { [key: string]: KEY_TYPE } = {};
 for (const row of KEY_LIST) {
   for (const key of row) {
     KEY_MAP[key.VALUE] = key;
@@ -282,4 +283,4 @@ for (const row of KEY_LIST) {
   }
 }
 
-export default KEY_LIST;
+export { KEY_MAP };

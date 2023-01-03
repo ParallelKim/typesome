@@ -9,3 +9,5 @@ export type KEY_TYPE = {
   VALUE: string;
   SHIFT?: string;
 };
+
+export type PSEUDO_VECTOR3 = [number, number, number];

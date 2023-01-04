@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import { Key } from "../models";
 import { CHAR_TYPE, KEY_TYPE } from "../../types";
-import { soundStore, paperStore } from "../../stores";
+import { soundStore, paperStore, animStore } from "../../stores";
 import { KEY_LIST, KEY_MAP } from "../../constants";
 
 type CAPS_AVAILABLE = "OFF" | "ONCE" | "LOCK";
@@ -89,21 +89,31 @@ const Keyboard = () => {
     SPECIAL: undefined,
   };
 
-  const onClick = (e: ThreeEvent<MouseEvent>, el: KEY_TYPE) => {
-    console.log(el, caps);
-    e.stopPropagation();
-    playTypeSound();
-    ACTION_MAP[el.TYPE]?.[el.VALUE]() ?? typewrite(capedKeyValue(el)); // it would show undefined for all character and make default function work
-  };
+  const { addAnim } = animStore();
 
   const capedKeyValue = (el: KEY_TYPE) => el[caps === "OFF" ? "VALUE" : "SHIFT"] ?? el["VALUE"];
 
+  const onClick = (e: ThreeEvent<MouseEvent>, el: KEY_TYPE) => {
+    console.log(el, capedKeyValue(el), caps);
+    e.stopPropagation();
+    playTypeSound();
+    addAnim(capedKeyValue(el));
+    ACTION_MAP[el.TYPE]?.[el.VALUE]() ?? typewrite(capedKeyValue(el)); // it would show undefined for all character and make default function work
+  };
+
   //keyboard event
   window.onkeydown = (e) => {
-    if (e.key === "Shift") return setCaps("LOCK");
+    console.log(e);
+    if (e.key === "Shift") {
+      onClick(e as any, KEY_MAP.Shift);
+      return setCaps("LOCK");
+    }
   };
   window.onkeyup = (e) => {
     if (e.key === "Shift") return setCaps("OFF");
+    if (e.key === "Tab") return onClick(e as any, KEY_MAP.Tab);
+    if (e.key === "CapsLock") return onClick(e as any, KEY_MAP.Caps);
+    if (e.key === " ") return onClick(e as any, KEY_MAP.Space);
     if (!KEY_MAP[e.key]) return;
     onClick(e as any, KEY_MAP[e.key]);
   };

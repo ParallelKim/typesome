@@ -28,7 +28,7 @@ function App() {
             <Keyboard />
             <Paper />
           </mesh>
-          {viewControll && <OrbitControls />}
+          {viewControll && <OrbitControls target={[0, 50, 0]} />}
           <Environment preset="sunset" background />
         </Suspense>
       </Canvas>

@@ -15,25 +15,19 @@ type ACTION_MAP_TYPE = {
 };
 
 const Keyboard = () => {
-  //constant options
   const KEYSPACE = 5 + 2;
   const KEYHEIGHT = 2;
 
-  //stores
   const { playTypeSound, playEnterSound } = soundStore();
   const { line, setLine, addLine, removeChar } = paperStore();
 
-  //states
   //   const [lang, setLang] = useState<"EN" | "KO">("EN"); // not implemented yet
   const [caps, setCaps] = useState<CAPS_AVAILABLE>("OFF");
-  const [lineWidth, setLineWidth] = useState(0);
   const [font, setFont] = useState<CHAR_TYPE>({ value: "", size: 16, bold: false });
 
-  //functions
-  const typewrite: (value: string, space?: number) => true = (value, space = 1) => {
+  const typewrite: (value: string) => true = (value) => {
     caps === "ONCE" && setCaps("OFF");
     setLine({ ...font, value });
-    setLineWidth(font.size * space);
     return true;
   };
 
@@ -59,7 +53,11 @@ const Keyboard = () => {
 
   const ACTION_MAP: ACTION_MAP_TYPE = {
     FUNCTION: {
-      Tab: () => typewrite("    ", 4),
+      Tab: () => {
+        typewrite(" ");
+        typewrite(" ");
+        return true;
+      },
       Caps: () => {
         setCaps(() => {
           if (caps === "LOCK") return "OFF";
@@ -94,7 +92,6 @@ const Keyboard = () => {
   const capedKeyValue = (el: KEY_TYPE) => el[caps === "OFF" ? "VALUE" : "SHIFT"] ?? el["VALUE"];
 
   const onClick = (e: ThreeEvent<MouseEvent>, el: KEY_TYPE) => {
-    console.log(el, capedKeyValue(el), caps);
     e.stopPropagation();
     playTypeSound();
     addAnim(capedKeyValue(el));
@@ -103,7 +100,6 @@ const Keyboard = () => {
 
   //keyboard event
   window.onkeydown = (e) => {
-    console.log(e);
     if (e.key === "Shift") {
       onClick(e as any, KEY_MAP.Shift);
       return setCaps("LOCK");

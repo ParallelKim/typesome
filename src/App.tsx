@@ -27,7 +27,7 @@ function App() {
             <Paper />
           </mesh>
           <OrbitControls target={[0, 50, 25]} makeDefault={orbitView} enablePan={orbitView} enableZoom={orbitView} enableRotate={orbitView} />
-          <PerspectiveCamera position={[0, 100, 100]} fov={50} makeDefault={!orbitView} />
+          <PerspectiveCamera position={[0, 100, 100]} fov={75} makeDefault={!orbitView} />
           <Environment preset="sunset" background />
         </Suspense>
       </Canvas>

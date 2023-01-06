@@ -6,16 +6,17 @@ const OverlayUI = ({ orbitView, setOrbitView }: { orbitView: boolean; setOrbitVi
       style={{
         position: "absolute",
         left: "0",
-        bottom: "0",
+        top: "0",
         zIndex: 265,
       }}
     >
       <button
         style={{
+          marginTop: "20px",
           marginLeft: "20px",
-          marginBottom: "20px",
-          width: "150px",
-          height: "150px",
+          padding: 0,
+          width: "10vw",
+          height: "10vw",
           borderRadius: "25%",
           alignContent: "center",
           justifyContent: "center",
@@ -25,7 +26,7 @@ const OverlayUI = ({ orbitView, setOrbitView }: { orbitView: boolean; setOrbitVi
           setOrbitView(!orbitView);
         }}
       >
-        <img style={{ width: "100px", height: "100px", objectFit: "fill" }} src={orbitView ? "icons/open.png" : "icons/lock.png"} />
+        <img style={{ width: "5vw", height: "5vw", objectFit: "fill" }} src={orbitView ? "icons/open.png" : "icons/lock.png"} />
       </button>
     </div>
   );

@@ -16,7 +16,7 @@ const paperStore = create<STORETYPE>((set) => ({
   paper: [],
   setLine: (newChar: CHAR_TYPE) =>
     set((state) => {
-      if (state.line.length === 9) {
+      if (state.line.length === 10) {
         state.addLine();
         return { line: [newChar] };
       }

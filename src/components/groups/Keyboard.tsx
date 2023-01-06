@@ -98,7 +98,6 @@ const Keyboard = () => {
     ACTION_MAP[el.TYPE]?.[el.VALUE]() ?? typewrite(capedKeyValue(el)); // it would show undefined for all character and make default function work
   };
 
-  //keyboard event
   window.onkeydown = (e) => {
     if (e.key === "Shift") {
       onClick(e as any, KEY_MAP.Shift);
@@ -109,6 +108,7 @@ const Keyboard = () => {
     if (e.key === "Shift") return setCaps("OFF");
     if (e.key === "Tab") return onClick(e as any, KEY_MAP.Tab);
     if (e.key === "CapsLock") return onClick(e as any, KEY_MAP.Caps);
+    if (e.key === "Backspace") return onClick(e as any, KEY_MAP.Back);
     if (e.key === " ") return onClick(e as any, KEY_MAP.Space);
     if (!KEY_MAP[e.key]) return;
     onClick(e as any, KEY_MAP[e.key]);

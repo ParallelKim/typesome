@@ -1,4 +1,5 @@
 import Keyboard from "./Keyboard";
 import Paper from "./Paper";
+import OverlayUI from "./OverlayUI";
 
-export { Keyboard, Paper };
+export { Keyboard, Paper, OverlayUI };

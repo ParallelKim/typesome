@@ -1,37 +1,37 @@
 import "./App.css";
 import { Canvas } from "@react-three/fiber";
 import { Suspense, useState } from "react";
-import { Environment, OrbitControls } from "@react-three/drei";
+import { Environment, Html, OrbitControls, PerspectiveCamera } from "@react-three/drei";
 
 import { Body } from "./components/models";
-import { Keyboard, Paper } from "./components/groups";
+import { Keyboard, OverlayUI, Paper } from "./components/groups";
 import { SoundManager } from "./components/managers";
 
 function App() {
-  const [viewControll, setViewControll] = useState(true);
+  const [orbitView, setOrbitView] = useState(true);
 
   return (
-    <div id="canvas">
+    <div id="page">
       <SoundManager />
       <Canvas
         camera={{
-          position: [0, 130, 80],
+          position: [0, 50, 100],
           fov: 75,
-          near: 0.1,
-          far: 1000,
         }}
       >
         <pointLight position={[100, 100, 100]} />
         <Suspense fallback={null}>
-          <mesh>
+          <mesh key="Typewriter">
             <Body />
             <Keyboard />
             <Paper />
           </mesh>
-          {viewControll && <OrbitControls target={[0, 50, 0]} />}
+          <OrbitControls target={[0, 50, 25]} makeDefault={orbitView} enablePan={orbitView} enableZoom={orbitView} enableRotate={orbitView} />
+          <PerspectiveCamera position={[0, 100, 100]} fov={50} makeDefault={!orbitView} />
           <Environment preset="sunset" background />
         </Suspense>
       </Canvas>
+      <OverlayUI orbitView={orbitView} setOrbitView={setOrbitView} />
     </div>
   );
 }

@@ -18,7 +18,7 @@ const OverlayUI = ({ orbitView, setOrbitView }: { orbitView: boolean; setOrbitVi
           width: "10vw",
           height: "10vw",
           borderRadius: "25%",
-          alignContent: "center",
+          alignItems: "center",
           justifyContent: "center",
           backgroundColor: "rgba(255, 255, 255, 0.5)",
         }}

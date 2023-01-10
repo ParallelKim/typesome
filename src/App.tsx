@@ -19,7 +19,11 @@ function App() {
           fov: 75,
         }}
       >
-        <pointLight position={[100, 100, 100]} />
+        <group key="lights">
+          <pointLight position={[0, 100, 0]} intensity={5} />
+          <pointLight position={[100, 25, 0]} intensity={3} />
+          <pointLight position={[-100, 25, 0]} intensity={3} />
+        </group>
         <Suspense fallback={null}>
           <mesh key="Typewriter">
             <Body />

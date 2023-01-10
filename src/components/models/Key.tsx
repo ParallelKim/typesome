@@ -21,7 +21,7 @@ const Key = ({ text = "", position = [0, 0, 0], onClick = () => {} }: KeyProps) 
   const KEY_SIZE = 5;
   const MESH_ORIGIN: PSEUDO_VECTOR3 = [0, 20, 30];
   const MESH_ROTATION: PSEUDO_VECTOR3 = [0, Math.PI, 0];
-  const TEXT_ORIGIN: PSEUDO_VECTOR3 = [0, 0.25, 0.4];
+  const TEXT_ORIGIN: PSEUDO_VECTOR3 = [0, 0.4, 0.4];
   const TEXT_ROTATION: PSEUDO_VECTOR3 = [Math.PI * 0.5, Math.PI, 0];
   const TEXT_SCALE: PSEUDO_VECTOR3 = [10, 10, 10];
 

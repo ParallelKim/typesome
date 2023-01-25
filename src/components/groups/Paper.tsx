@@ -13,7 +13,7 @@ const Paper = () => {
   const { line, paper } = paperStore();
 
   return (
-    <mesh key="position" position={[34, 55, 0]} rotation={[-Math.PI * 0.1, 0, 0]} scale={[0.7, 0.7, 0.7]}>
+    <mesh key="position" position={[34, 58, -5]} rotation={[-Math.PI * 0.1, 0, 0]} scale={[0.7, 0.7, 0.7]}>
       <group key="paper" position={[-(line.length + 1) * 9, (paper.length * Y_SPACE) / 2, -80]}>
         <mesh>
           <boxGeometry args={[100, DEFAULT_HEIGHT + paper.length * Y_SPACE, 0.05]} />

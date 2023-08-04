@@ -1,11 +1,11 @@
-import "./App.css";
+import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Suspense, useState } from "react";
-import { Environment, Html, OrbitControls, PerspectiveCamera } from "@react-three/drei";
+import "./App.css";
 
-import { Body } from "./components/models";
 import { Keyboard, OverlayUI, Paper } from "./components/groups";
 import { SoundManager } from "./components/managers";
+import { Body } from "./components/models";
 
 function App() {
   const [orbitView, setOrbitView] = useState(true);
@@ -30,9 +30,20 @@ function App() {
             <Keyboard />
             <Paper />
           </mesh>
-          <OrbitControls target={[0, 50, 25]} makeDefault={orbitView} enablePan={orbitView} enableZoom={orbitView} enableRotate={orbitView} />
-          <PerspectiveCamera position={[0, 100, 100]} fov={75} makeDefault={!orbitView} />
-          <Environment preset="sunset" background />
+          <OrbitControls
+            target={[0, 50, 25]}
+            makeDefault={orbitView}
+            enablePan={orbitView}
+            enableZoom={orbitView}
+            enableRotate={orbitView}
+          />
+          <PerspectiveCamera
+            position={[0, 100, 100]}
+            fov={75}
+            makeDefault={!orbitView}
+            getObjectByProperty={undefined}
+          />
+          {/* <Environment preset="sunset" background /> */}
         </Suspense>
       </Canvas>
       <OverlayUI orbitView={orbitView} setOrbitView={setOrbitView} />
